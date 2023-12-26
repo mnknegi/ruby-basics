@@ -127,7 +127,37 @@ y = "100".to_i(9) equals to 81 in decimal.
 puts "Hello" #bareword-style invocation
 ```
 
-#### Ruby tools and applications
+#### Ruby installation
+
+Ruby can tell you where its installation files are located. For this you need to preload a Ruby library package called `rbconfig` into your irb session. rbconfig is an interface to a lot of compiled-in configuration information about your Ruby installation, and you can get irb to load it by using irb’s -r command-line flag and the name of the package:
+```
+e.g.
+irb --simple-prompt -rrbconfig
+>> RbConfig::CONFIG[term] # Here term can be replaced by "bindir"
+```
+
+`RbConfig::CONFIG` is a constant referring to the hash (a kind of data structure) where Ruby keepsits configuration knowledge. `"bindir"` is a hash key. Querying the hash constant with a hash key will give you a corresponding hash value, which is the name of binary-file installation directory.
+
+|Term    |Directory content|
+|----------|-----------|
+|rubylibdir        |Ruby standard library|
+|bindir         |Ruby command-line tools|
+|archdir         |Architecture-specific extensions and libraries|
+|sitedir         |Your own or third-party extensions and libraries|
+|vendordir      |Third-party extensions and libraries (in Ruby)|
+|sitelibdir         |Your own Ruby language extensions (in Ruby)|
+|sitearchdir  |Your own Ruby language extensions (in C)|
+
+- Check default load paths:
+
+ruby -e 'puts $:'
+-e is inline script to interpreter.
+
+- `load` method is to load other Ruby files in your project. With load ../filename.rb you can navigate to relative directories with the conventional double dot 'directory-up' symbol.
+- `required` load it once, unlike load required doesn't know about the current working directory. `require "./loadee.rb"`
+- `required_relative` This command loads features by searching relative to the directory in which the file from which it’s called resides. Thus in the previous example you could do this. `require_relative "loadee"`
+
+### Ruby tools and applications
 
 - ruby - interpreter
 - irb - interactive Ruby interpreter
@@ -172,3 +202,11 @@ you can also install a gem on your hard disk: gem install /home/me/mygems/someth
 providing a gem without full filename would look for it in current directory and local cache, also searches remotely for dependencies unless providing -l command-line flag
 to uninstall a gem, use gem uninstall gemname
 once a gem is installed, you can require it
+
+#### Interactive Ruby Interpreter(irb)
+
+ `irb`: Instead processing a file it processes what we type during a irb session.
+ `irb --simple-prompt`: keep irb's output shorter.
+ `irb --simple-prompt -noecho`: additional expression result is supressed.
+ 
+ To exit from irb normally you can use `exit` or `Ctrl+C` or `Ctrl+D` will also work.
