@@ -2,6 +2,7 @@
 ## Table of Content
 - Introduction(#introduction)
 - Ruby Foundations(#ruby-foundations)
+- Objects, Methods and Local Variables(#objects-methods-and-local-variables)
 
 ### Introduction
 
@@ -210,3 +211,77 @@ once a gem is installed, you can require it
  `irb --simple-prompt -noecho`: additional expression result is supressed.
  
  To exit from irb normally you can use `exit` or `Ctrl+C` or `Ctrl+D` will also work.
+
+### Objects, Methods and Local Variables
+
+Generic object
+
+> obj = Object.new
+
+define a method using `def`
+
+```
+def object.talk
+pluts "I'm an object."
+end
+```
+
+Sending message to object
+
+> obj.talk
+
+If there is no method by the name, error handling measures are taken.
+
+Methods that take arguments
+
+- Indicate the arguments by means of a list of variables in parentheses after the method name(arguments can be required or optional).
+- The variables listed in the method definition are the method’s `formal parameters`.
+- The values you supply to the method when you call it are the corresponding `arguments`.
+
+```
+def obj.c2f(c)
+(c * 9 / 5) + 32
+end
+``` 
+
+> obj.c2f(100) >> 212.0
+
+**Note:** The parentheses can be optional in both the cases. It is not true everytime. It is good to use parentheses everytime.
+
+> def obj.c2f c
+
+> obj.c2f 100 >> 212.0 
+
+```
+e.g.
+
+student = Object.new
+
+def student.name
+"John Appleseed"
+end
+
+def student.standard
+"Fifth"
+end
+
+def student.age
+11
+end
+
+def student.is_monitor? # Ruby let us put question mark at the end of method name to make the method call look like a question.
+false
+end
+
+querying:
+print "The name of the student is: "
+print student.name + ", and is in "
+print student.standard + " standard and his age is "
+print student.age + " years. He is "
+print student.is_monitor ? "" : "not" + "the monitor of the class."
+```
+- #{...} is used for string interpolation.
+- `false` and `true` are special terms in Ruby. They are objects. 
+- Every object in Ruby has a truth value and almost every object has true value in Ruby.
+- Only false and nil value have truth value false.
+- Everything in Ruby has a Boolean value, and sometimes it’s not what you might expect. 
