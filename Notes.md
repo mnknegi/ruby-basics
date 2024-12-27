@@ -285,3 +285,67 @@ print student.is_monitor ? "" : "not" + "the monitor of the class."
 - Every object in Ruby has a truth value and almost every object has true value in Ruby.
 - Only false and nil value have truth value false.
 - Everything in Ruby has a Boolean value, and sometimes it’s not what you might expect. 
+
+#### Innate behaviour of an newly born object
+
+To see the innate methods of an object, we can call `methods` method.
+
+> p Object.new.methods.sort
+
+When we create a object using Object.new that is call `Generic object`. We have one more object that is BasicObject and that is create using `BasicObject.new` and it is a king of proto-object who have only seven methods and methods method is not one out of the seven methods, which means we can't see any innate methods on BasicObject.
+
+#### Some important innate methods
+
+- object_id: Can be used to uniquely identify the object. It's like reference to an object.
+- respond_to?: This method is used to check whether the object respond to the method.
+```
+e.g.
+obj = Obejct.new
+if obj.respond_to?("talk")
+obj.talk
+else
+print("Sorry! the object doesn't respond to method 'task'")
+end
+```
+- send: can be used to send message to an object.
+```
+obj.send("talk")
+```
+- __send__: Alternative to call send, it avoid conflict with dev defined send.
+- public_send: This can't call object's private methods.
+
+#### Method Arguments
+
+- Providing incorrect number of arguments can result in `ArgumentError`.
+- To provide any number of arguments put asterisk (`*`) in front of single argument name. e.g. def obj.multi_args(*x)
+- We can provide default arguments. e.g. def obj.multi_args(a, b, c=1)
+- Ruby tries to assign values to as many variables as possible. And the sponge parameters get the lowest priority.
+- if the method runs out of arguments after it’s performed the assignments of required arguments, then a catch-all parameter like *x ends up as an empty array.
+```
+e.g.
+def mixed_args(a,b,*c,d)
+puts "Arguments: "
+p a,b,c,d
+end
+
+mixed_args(1,2,3,4,5) => Arguments: 1, 2, [3, 4], 5
+mixed_args(1,2,3) => Arguments: 1,2,[],3
+```
+
+- If there is any optional parameter in the method, the return value of the method call is an array consist of all the values.
+```
+e.g.
+def args_unleashed(a,b=1,*c,d,e)
+puts "Arguments: "
+p a,b,c,d,e
+end
+
+args_unleashed(1,2,3,4,5) => Arguments: [1,2,[3],4,5]
+args_unleashed(1,2,3,4) => Arguments: [1,2,[],3,4]
+args_unleashed(1,2,3) => Arguments: [1,1,[],2,3]
+args_unleashed(1,2) => ArgumentError: wrong number of arguments(2 for 3+)
+```
+- required arguments are handled first, then the default one and then the sponge.
+> def args_demo(a,b,c=1,d*,e,f)
+
+-
